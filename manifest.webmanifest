@@ -1,7 +1,7 @@
 {
     "name": "resumption-leave",
     "short_name": "resumption-leave",
-    "theme_color": "#ffffff",
+    "theme_color": "#f76a24",
     "background_color": "#fafafa00",
     "display": "standalone",
     "scope": "/",
