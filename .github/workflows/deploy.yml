@@ -21,8 +21,8 @@ jobs:
           # This assumes your book is in the root of your repository.
           # Just add a `cd` here if you need to change to another directory.
           mdbook build
-          git branch gh-pages
-          git worktree add gh-pages gh-pages
+#          git branch gh-pages
+          git worktree add gh-pages origin/gh-pages
           git config user.name "Deploy from CI"
           git config user.email ""
           cd gh-pages
