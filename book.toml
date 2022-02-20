@@ -1,0 +1,6 @@
+[book]
+authors = ["ForgQi"]
+language = "zh"
+multilingual = false
+src = "src"
+title = "biliup"
