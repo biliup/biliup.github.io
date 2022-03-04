@@ -1,6 +1,6 @@
 # biliup-app介绍
 > 源码：<https://github.com/ForgQi/Caution> \
-> 演示视频：[BV16Y411V7xv](https://www.bilibili.com/video/BV16Y411V7xv)
+> 演示视频：[链接](https://www.zhihu.com/zvideo/1482481163700367361)
 
 bilibili投稿客户端，支持分p上传线路选择，支持Windows，Linux，macOS。
 
