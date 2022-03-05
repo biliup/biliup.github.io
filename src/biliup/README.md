@@ -18,5 +18,8 @@ biliup是一个自动监测直播的工具，
 Please install at least one of the following Javascript interpreter.'\
 python packages: PyChakra, quickjs\
 applications: Gjs, CJS, QuickJS, JavaScriptCore, Node.js, etc.
+
+点击查看更多 [常见问题](https://blog.waitsaber.org/archives/167)
+
 ## Credits
 * Thanks `ykdl, youtube-dl, streamlink` provides downloader.

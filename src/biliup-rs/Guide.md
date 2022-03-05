@@ -55,7 +55,7 @@ ARGS:
 
 OPTIONS:
     -c, --config <FILE>            Sets a custom config file
-        --copyright <COPYRIGHT>    是否转载 [default: 1]
+        --copyright <COPYRIGHT>    是否转载 1 原创 2 转载 [default: 1]
         --cover <COVER>            视频封面 
         --desc <DESC>              视频简介 
         --dtime <DTIME>            延时发布时间，距离提交大于4小时，格式为10位时间戳
