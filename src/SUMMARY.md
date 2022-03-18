@@ -18,4 +18,5 @@
 
 ___
 [b站投稿线路分析](upload-systems-analysis.md)
+[b站tid分区表参考](tid-ref.md)
 
