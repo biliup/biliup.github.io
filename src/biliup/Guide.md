@@ -53,6 +53,58 @@ streamers:
         url:
             - https://www.twitch.tv/xxx
 ```
+
+## 上传完成后发送邮件通知
+注意：发送邮件通知需要有可用的 smtp 服务，一般邮件如 QQ 邮箱等都会提供，具体查询相关服务的文档
+
+在 streamers 配置的 `postprocessor` 中添加一个 `run` 操作，如下
+
+```
+postprocessor:
+    - run: python3 path/to/mail.py
+```
+
+其中 mail.py 如下，注意修改服务器相关的配置
+
+```
+from email import encoders
+from email.header import Header
+from email.mime.text import MIMEText
+from email.utils import parseaddr, formataddr
+
+import smtplib
+import sys
+from functools import reduce
+from operator import add
+    
+def _format_addr(s):
+    name, addr = parseaddr(s)
+    return formataddr((Header(name, 'utf-8').encode(), addr))
+
+# print(sys.stdin)
+files = []
+for line in sys.stdin:
+    files.append(line.strip())
+
+from_addr = 'noreply@xx.com'
+password = 'psw'
+to_addr = 'xx@gmail.com'
+smtp_server = 'smtp.xx.com'
+
+first_file_name = files[0].split('/')[-1]
+more_text = '' if len(files) <= 1 else  f' 等 {len(files)}个' 
+msg = MIMEText(reduce(add, map(lambda x: x + '\n', files)), 'plain', 'utf-8')
+msg['From'] = _format_addr('noreply <%s>' % from_addr)
+msg['To'] = _format_addr('Ekko <%s>' % to_addr)
+msg['Subject'] = Header(f'文件上传完成 {first_file_name}{more_text}', 'utf-8').encode()
+    
+server = smtplib.SMTP_SSL(smtp_server, 465)
+server.set_debuglevel(1)
+server.login(from_addr, password)
+server.sendmail(from_addr, [to_addr], msg.as_string())
+server.quit()
+```
+
 ## 完整配置文件示例
 如需细致自定义配置可参考以下文件，大部分为可选项，可不填
 ```yaml
@@ -101,6 +153,7 @@ streamers:
         description: 视频简介
         postprocessor: # 上传完成后，将按自定义顺序执行自定义操作
             - run: echo hello! # 执行任意命令，等同于在shell中运行,视频文件路径作为标准输入传入
+            - run: python3 path/to/mail.py # 执行一个 Python 脚本，可以用来发送邮件等
             - mv: backup/ # 移动文件到backup目录下
 #            - rm # 删除文件，为默认操作
         tags:
