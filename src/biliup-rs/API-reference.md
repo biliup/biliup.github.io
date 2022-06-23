@@ -16,12 +16,19 @@ Studio::builder()
     .build()
     .submit(&Client::new().login_by_cookies("file").await?);
 ```
+### Http
+
+可以通过[biliup-http](https://github.com/limitcool/biliup-http) 导出http-api接口给其他语言调用。
+
 ### Python
+
 可以通过 [PyO3](https://github.com/PyO3/pyo3) 
 导出接口给 Python 调用。
+
 ### Node.js
 可以通过 [napi-rs](https://github.com/napi-rs/napi-rs)
 导出接口给 Node.js 调用。
 
 ___
 如果你有非Rust语言调用的需求，可以提一个issue
+
