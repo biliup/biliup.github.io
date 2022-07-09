@@ -47,7 +47,7 @@ pip3 -V
 pip 20.0.2 from /usr/lib/python3/dist-packages/pip (python 3.8)
 ```
 
-- 安装ffmpeg
+- 安装ffmpeg（可选，新版已经不需要）
 
 ```shell
 sudo apt install ffmpeg
@@ -68,7 +68,7 @@ ffmpeg version 4.2.7-0ubuntu0.1 Copyright (c) 2000-2022 the FFmpeg developers
 ……内容较多略过……
 ```
 
-- 安装nodejs
+- 安装nodejs（可选，录制斗鱼需要）
 
 ```shell
 sudo apt install nodejs
@@ -151,7 +151,6 @@ sudo vi /home/config.toml
 ```toml
 [streamers."直播录像"]# 设置自定义名称
 url = ["https://live.bilibili.com/000000"]# 设置直播间url网址
-tags = ["biliup"]# 设置投稿时添加的tag标签
 ```
 
 输入完成后按“**ESC**”进入编辑模式，输入"**:wq**"保存并退出。
