@@ -10,6 +10,7 @@
 - [工具简介](biliup/README.md)
 - [安装部署](biliup/Installation.md)
 - [使用指南](biliup/Guide.md)
+  - [小白快速上手](biliup/Guide-linux.md)
   - [API调用](biliup/API-reference.md)
 - [For Developers](biliup/for_developers.md)
 # 投稿客户端
