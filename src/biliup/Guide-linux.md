@@ -151,6 +151,7 @@ sudo vi /home/config.toml
 ```toml
 [streamers."直播录像"]# 设置自定义名称
 url = ["https://live.bilibili.com/000000"]# 设置直播间url网址
+tags = ["biliup"]
 ```
 
 输入完成后按“**ESC**”进入编辑模式，输入"**:wq**"保存并退出。
