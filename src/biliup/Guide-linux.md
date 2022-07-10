@@ -4,6 +4,8 @@
 
 本文全程命令行操作，使用系统为 ubuntu-20.04-amd64，登录用户为root用户
 
+linux/linux+图形化/windows/配置文件粗讲 **[视频教程](https://www.bilibili.com/video/BV1jB4y1p7TK/)**
+
 - 更新软件源列表
 
 ``` shell
