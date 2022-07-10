@@ -52,6 +52,7 @@ streamers:
     xxx直播录像: 
         url:
             - https://www.twitch.tv/xxx
+        tags: biliup
 ```
 
 ## 上传完成后发送邮件通知
