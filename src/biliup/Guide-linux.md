@@ -68,7 +68,7 @@ ffmpeg version 4.2.7-0ubuntu0.1 Copyright (c) 2000-2022 the FFmpeg developers
 ……内容较多略过……
 ```
 
-- 安装nodejs
+- 安装nodejs（可选，录制斗鱼需要）
 
 ```shell
 sudo apt install nodejs
@@ -111,12 +111,6 @@ biliup --version
 v0.3.0
 ```
 
-- 在保存文件的目录下创建配置文件
-
-本文以“**/home**”文件夹为例子，其他文件夹请自行替换
-
-此目录将保存录播文件、配置文件、登录文件，配置文件本文以toml格式为例，并使用最小配置，biliup同时支持yaml格式，yaml和完整配置后续会出教程
-
 - 下载biliup-rs
 
 https://github.com/ForgQi/biliup-rs/releases 查看最新版本根据系统和架构选择对应文件，本文使用的服务器为linux x86_64
@@ -136,6 +130,11 @@ mv -fb ./biliupR*/* ./
 rm -rf ./biliupR*
 ```
 
+- 在保存文件的目录下创建配置文件
+
+此目录将保存录播文件，配置文件，配置文件本文以toml格式为例，并使用最小配置，biliup同时支持yaml格式，yaml和完整配置后续会出教程
+
+本文以“**/home**”文件夹为例子，其他文件夹请自行替换
 
 ```shell
 sudo touch /home/config.toml
