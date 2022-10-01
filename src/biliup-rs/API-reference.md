@@ -29,6 +29,10 @@ Studio::builder()
 可以通过 [napi-rs](https://github.com/napi-rs/napi-rs)
 导出接口给 Node.js 调用。
 
+### Golang  
+本项目的 Golang 实现 [biliup-go](https://github.com/XiaoMiku01/biliup-go)  
+已实现**命令行**和**go第三方包**两种调用方式  
+
 ___
 如果你有非Rust语言调用的需求，可以提一个issue
 
