@@ -30,7 +30,9 @@ Studio::builder()
 导出接口给 Node.js 调用。
 
 ### Golang  
-本项目的 Golang 实现 [biliup-go](https://github.com/XiaoMiku01/biliup-go)  
+本项目的 Golang 实现
+* [luckycat0426/biliup-go](https://github.com/luckycat0426/biliup-go)
+* [XiaoMiku01/biliup-go](https://github.com/XiaoMiku01/biliup-go)  
 已实现**命令行**和**go第三方包**两种调用方式  
 
 ___
