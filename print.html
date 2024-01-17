@@ -1,0 +1,1107 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>biliup</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">概览</a></li><li class="chapter-item expanded affix "><li class="part-title">命令行投稿工具</li><li class="chapter-item expanded "><a href="biliup-rs/index.html"><strong aria-hidden="true">1.</strong> biliup-rs介绍</a></li><li class="chapter-item expanded "><a href="biliup-rs/Installation.html"><strong aria-hidden="true">2.</strong> 下载安装</a></li><li class="chapter-item expanded "><a href="biliup-rs/Guide.html"><strong aria-hidden="true">3.</strong> 使用指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="biliup-rs/API-reference.html"><strong aria-hidden="true">3.1.</strong> API调用</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">自动直播录制投稿工具</li><li class="chapter-item expanded "><a href="biliup-docs/index.html"><strong aria-hidden="true">4.</strong> 工具简介</a></li><li class="chapter-item expanded "><a href="biliup-docs/Installation.html"><strong aria-hidden="true">5.</strong> 安装部署</a></li><li class="chapter-item expanded "><a href="biliup-docs/Guide.html"><strong aria-hidden="true">6.</strong> 使用指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="biliup-docs/Guide-linux.html"><strong aria-hidden="true">6.1.</strong> 小白快速上手</a></li><li class="chapter-item expanded "><a href="biliup-docs/API-reference.html"><strong aria-hidden="true">6.2.</strong> API调用</a></li></ol></li><li class="chapter-item expanded "><a href="biliup-docs/for_developers.html"><strong aria-hidden="true">7.</strong> For Developers</a></li><li class="chapter-item expanded affix "><li class="part-title">投稿客户端</li><li class="chapter-item expanded "><a href="biliup-app/index.html"><strong aria-hidden="true">8.</strong> biliup-app介绍</a></li><li class="chapter-item expanded "><a href="biliup-app/Installation.html"><strong aria-hidden="true">9.</strong> 下载安装</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="upload-systems-analysis.html">b站投稿线路分析</a></li><li class="chapter-item expanded affix "><a href="tid-ref.html">b站tid分区表参考</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">biliup</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>biliup是一组工具集，有三个程序：</p>
+<ul>
+<li>命令行投稿工具</li>
+<li>自动录播投稿工具</li>
+<li>b站投稿客户端</li>
+</ul>
+<p>旨在降低使用、开发自动化b站投稿的难度，
+同时提供了b站web端、客户端投稿工具未开放的一些功能，如多p投稿，线路选择，
+并发数设置，直播录制，视频搬运等。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="biliup-rs"><a class="header" href="#biliup-rs">biliup-rs</a></h1>
+<blockquote>
+<p>源码：<a href="https://github.com/ForgQi/biliup-rs">https://github.com/ForgQi/biliup-rs</a> </p>
+</blockquote>
+<p>biliup-rs 是一个B站命令行投稿工具，支持多p投稿，支持上传线路选择，并发数设置，保证国外服务器上传速度可跑满带宽。
+支持 <strong>短信登录</strong>，<strong>账号密码登录</strong>，<strong>扫码登录</strong>，<strong>浏览器登录</strong>
+，并将登录后返回的 cookie 和 token 保存在 <code>cookie.json</code> 中，可用于其他项目。</p>
+<h3 id="windows-演示"><a class="header" href="#windows-演示">Windows 演示</a></h3>
+<p>登录：</p>
+<pre><code class="language-powershell">.\biliup.exe login
+</code></pre>
+<p><img src="biliup-rs/../resource/login.gif" alt="login" /></p>
+<p>上传：</p>
+<pre><code class="language-powershell">.\biliup.exe upload
+</code></pre>
+<p><img src="biliup-rs/../resource/upload.gif" alt="upload" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="下载安装"><a class="header" href="#下载安装">下载安装</a></h1>
+<h3 id="预编译的二进制文件"><a class="header" href="#预编译的二进制文件">预编译的二进制文件</a></h3>
+<p>Windows，macOS，Linux<br />
+下载地址：<a href="https://github.com/ForgQi/biliup-rs/releases">https://github.com/ForgQi/biliup-rs/releases</a></p>
+<h3 id="building"><a class="header" href="#building">Building</a></h3>
+<p>If you're a <strong>Rust programmer</strong>, biliup-rs can be installed with <code>cargo</code>.</p>
+<pre><code class="language-shell">$ cargo install biliup
+</code></pre>
+<p>biliup-rs is written in Rust, so you'll need to grab a
+<a href="https://www.rust-lang.org/">Rust installation</a> in order to compile it.</p>
+<p>To build biliup-rs:</p>
+<pre><code class="language-shell">$ git clone https://github.com/ForgQi/biliup-rs
+$ cd biliup-rs
+$ cargo build --release
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="使用指南"><a class="header" href="#使用指南">使用指南</a></h1>
+<p>投稿支持两种模式：</p>
+<ul>
+<li>快速投稿，输入 <code>biliup upload test1.mp4 test2.mp4</code> 即可快速多p投稿；</li>
+<li>通过配置文件投稿，配置文件详见 <a href="biliup-rs/Guide.html#useage">config.yaml</a> ，
+支持按照 Unix shell style patterns 来批量匹配视频文件，如 <code>/media/**/*.mp4</code> 匹配 media 及其子目录中的所有 mp4 文件且可以自由调整视频标题、简介、标签等：</li>
+</ul>
+<h2 id="useage"><a class="header" href="#useage">USEAGE</a></h2>
+<p>同一条匹配规则内的视频将多p投稿在一个稿件内，多个匹配条目将分为多个视频投稿，
+多个视频标签使用逗号分隔。</p>
+<ul>
+<li>配置文件示例：</li>
+</ul>
+<pre><code class="language-yaml">line: kodo
+limit: 3
+streamers:
+  视频patterns1*:
+    copyright: 1
+    source: 转载来源
+    tid: 171 # 投稿分区
+    cover: &quot;&quot; # 视频封面
+    title: 标题
+    desc_format_id: 0
+    desc: 简介
+    dynamic: &quot;&quot;
+    subtitle:
+      open: 0
+      lan: &quot;&quot;
+    tag: &quot;&quot;
+    dtime: ~
+    open_subtitle: false
+  视频patterns2*:
+    copyright: 1
+    source: 转载来源
+    tid: 171 # 投稿分区
+    cover: /cover/up.jpg # 视频封面
+    title: 标题
+    desc_format_id: 0
+    desc: 简介
+    dynamic: &quot;&quot;
+    subtitle:
+      open: 0
+      lan: &quot;&quot;
+    tag: &quot;&quot;
+    dtime: ~
+    open_subtitle: false
+</code></pre>
+<ul>
+<li>查看完整用法命令行输入 <code>biliup -h</code></li>
+</ul>
+<pre><code class="language-shell">$ biliup help upload
+
+USAGE:
+    biliup.exe upload [OPTIONS] [VIDEO_PATH]...
+
+ARGS:
+    &lt;VIDEO_PATH&gt;...    需要上传的视频路径,若指定配置文件投稿不需要此参数
+
+OPTIONS:
+    -c, --config &lt;FILE&gt;            Sets a custom config file
+        --copyright &lt;COPYRIGHT&gt;    是否转载 1 原创 2 转载 [default: 1]
+        --cover &lt;COVER&gt;            视频封面 
+        --desc &lt;DESC&gt;              视频简介 
+        --dtime &lt;DTIME&gt;            延时发布时间，距离提交大于4小时，格式为10位时间戳
+        --dynamic &lt;DYNAMIC&gt;        空间动态 
+    -h, --help                     Print help information
+    -l, --line &lt;LINE&gt;              选择上传线路，支持kodo, bda2, qn, ws
+        --limit &lt;LIMIT&gt;            单视频文件最大并发数 [default: 3]
+        --source &lt;SOURCE&gt;          是转载来源 
+        --tag &lt;TAG&gt;                视频标签 
+        --tid &lt;TID&gt;                投稿分区 [default: 171]
+        --title &lt;TITLE&gt;            视频标题 
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="api调用"><a class="header" href="#api调用">API调用</a></h1>
+<p>本项目使用 Rust , 可以作为 lib 被调用</p>
+<h3 id="rust"><a class="header" href="#rust">Rust</a></h3>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>Studio::builder()
+    .desc(&quot;desc&quot;)
+    .dtime(&quot;dtime&quot;)
+    .copyright(&quot;copyright&quot;)
+    .cover(&quot;cover&quot;)
+    .dynamic(&quot;dynamic&quot;)
+    .source(&quot;source&quot;)
+    .tag(&quot;tag&quot;)
+    .tid(&quot;tid&quot;)
+    .title(&quot;title&quot;)
+    .videos(&quot;videos&quot;)
+    .build()
+    .submit(&amp;Client::new().login_by_cookies(&quot;file&quot;).await?);
+<span class="boring">}</span></code></pre></pre>
+<h3 id="http"><a class="header" href="#http">Http</a></h3>
+<p>可以通过<a href="https://github.com/limitcool/biliup-http">biliup-http</a> 导出http-api接口给其他语言调用。</p>
+<h3 id="python"><a class="header" href="#python">Python</a></h3>
+<p>可以通过 <a href="https://github.com/PyO3/pyo3">PyO3</a> 
+导出接口给 Python 调用。</p>
+<h3 id="nodejs"><a class="header" href="#nodejs">Node.js</a></h3>
+<p>可以通过 <a href="https://github.com/napi-rs/napi-rs">napi-rs</a>
+导出接口给 Node.js 调用。</p>
+<h3 id="golang"><a class="header" href="#golang">Golang</a></h3>
+<p>本项目的 Golang 实现</p>
+<ul>
+<li><a href="https://github.com/luckycat0426/biliup-go">luckycat0426/biliup-go</a></li>
+<li><a href="https://github.com/XiaoMiku01/biliup-go">XiaoMiku01/biliup-go</a><br />
+已实现<strong>命令行</strong>和<strong>go第三方包</strong>两种调用方式</li>
+</ul>
+<hr />
+<p>如果你有非Rust语言调用的需求，可以提一个issue</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="biliup"><a class="header" href="#biliup">biliup</a></h1>
+<blockquote>
+<p>源码：<a href="https://github.com/ForgQi/biliup">https://github.com/ForgQi/biliup</a><br />
+演示视频（demonstration video）：<a href="https://www.bilibili.com/video/BV1ip4y1x7Gi">BV1ip4y1x7Gi</a></p>
+</blockquote>
+<p>biliup是一个自动监测直播的工具，
+支持自动录制各大直播平台实时流，上传到bilibili。同时也支持：</p>
+<ul>
+<li>twitch直播回放列表自动搬运至b站，如链接https://www.twitch.tv/xxxx/videos?filter=archives&amp;sort=time</li>
+<li>可自动选择或手动设置上传线路，保证国内外vps上传质量和速度以跑满带宽，
+可分别控制下载与上传并发量</li>
+<li>支持Web API与客户端API上传，支持分p上传</li>
+</ul>
+<h2 id="常见问题"><a class="header" href="#常见问题">常见问题</a></h2>
+<h4 id="1-为什么不能上传如返回400错误"><a class="header" href="#1-为什么不能上传如返回400错误">1. 为什么不能上传，如返回400错误</a></h4>
+<p>由于目前使用账号密码登录，大概率触发验证。请使用命令行工具登录B站获取cookie和token，将登录返回的信息填入配置文件，且使用引号括起yaml中cookie的数字代表其为字符串</p>
+<h4 id="2-为什么不能下载日志文件内显示找不到文件"><a class="header" href="#2-为什么不能下载日志文件内显示找不到文件">2. 为什么不能下载，日志文件内显示找不到文件</a></h4>
+<p>检查FFmpeg版本，过老的版本不能正常下载</p>
+<h4 id="3-斗鱼下载为什么报错"><a class="header" href="#3-斗鱼下载为什么报错">3. 斗鱼下载为什么报错</a></h4>
+<p>Please install at least one of the following Javascript interpreter.'<br />
+python packages: PyChakra, quickjs<br />
+applications: Gjs, CJS, QuickJS, JavaScriptCore, Node.js, etc.</p>
+<p>点击查看更多 <a href="https://blog.waitsaber.org/archives/167">常见问题</a></p>
+<h2 id="credits"><a class="header" href="#credits">Credits</a></h2>
+<ul>
+<li>Thanks <code>ykdl, youtube-dl, streamlink</code> provides downloader.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">INSTALLATION</a></h1>
+<h2 id="通用安装方法"><a class="header" href="#通用安装方法">通用安装方法</a></h2>
+<p>需要<code>Python 3.8</code>及以上版本，相关配置示例在config.yaml文件中，如直播间地址，b站账号密码</p>
+<ol>
+<li>安装 <strong>FFmpeg</strong>, <strong>pip</strong></li>
+<li>安装 <strong>biliup</strong>：<code>pip3 install biliup</code></li>
+</ol>
+<h2 id="linux安装"><a class="header" href="#linux安装">Linux安装</a></h2>
+<p>Linux下程序以daemon进程启动，录像和日志文件保存在执行目录下，程序执行过程可查看日志文件。
+<code>ps -A | grep biliup</code> 查看进程是否启动成功。</p>
+<p>详细操作过程可看 <a href="https://github.com/waitsaber">@waitsaber</a> 写的教程：</p>
+<ul>
+<li><a href="https://blog.waitsaber.org/archives/129">Ubuntu</a> </li>
+<li><a href="https://blog.waitsaber.org/archives/163">CentOS</a></li>
+</ul>
+<h2 id="docker使用-"><a class="header" href="#docker使用-">Docker使用 🔨</a></h2>
+<h3 id="方式一"><a class="header" href="#方式一">方式一</a></h3>
+<pre><code class="language-bash">vim /host/path/config.yaml
+docker run --name biliup -v /host/path:/opt -d ghcr.io/forgqi/biliup/caution
+</code></pre>
+<h3 id="方式二"><a class="header" href="#方式二">方式二</a></h3>
+<pre><code class="language-bash">cd biliup
+sudo docker build . -t biliup
+sudo docker run -d biliup
+</code></pre>
+<h3 id="进入容器-"><a class="header" href="#进入容器-">进入容器 📦</a></h3>
+<pre><code class="language-bash">sudo docker ps (找到你的imageId)
+sudo docker exec -it imageId /bin/bash     
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="使用指南-1"><a class="header" href="#使用指南-1">使用指南</a></h1>
+<p>需要创建配置文件 <strong><a href="https://github.com/ForgQi/biliup/blob/master/config(demo).yaml">config.yaml</a></strong>
+才可以启动，
+启动成功后会在命令执行目录生成日志文件，视频录像文件也保存在此目录，
+在更新源码后程序会在空闲时自动重启</p>
+<pre><code class="language-shell"># 启动
+$ biliup start
+# 退出 
+$ biliup stop
+# 重启 
+$ biliup restart
+# 查看版本
+$ biliup --version
+# 显示帮助以查看更多选项
+$ biliup -h
+</code></pre>
+<p>命令行选项：</p>
+<pre><code class="language-shell">usage: biliup [-h] [--version] [-v] [--config CONFIG]
+                   {start,stop,restart} ...
+
+Stream download and upload, not only for bilibili.
+
+positional arguments:
+  {start,stop,restart}  Windows does not support this sub-command.
+    start               Run as a daemon process.
+    stop                Stop daemon according to &quot;watch_process.pid&quot;.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -v, --verbose         Increase output verbosity
+  --config CONFIG       Location of the configuration file (default
+                        &quot;./config.yaml&quot;)
+
+</code></pre>
+<h2 id="最小配置文件示例"><a class="header" href="#最小配置文件示例">最小配置文件示例</a></h2>
+<p>新创建配置文件需填写以下必填项</p>
+<p>tid投稿分区见<a href="https://github.com/ForgQi/biliup/wiki">Wiki</a></p>
+<pre><code class="language-yaml">user: 
+    cookies:
+        SESSDATA: your SESSDATA
+        bili_jct: your bili_jct
+        DedeUserID__ckMd5: your ckMd5
+        DedeUserID: your DedeUserID
+    access_token: your access_key
+
+streamers:
+    xxx直播录像: 
+        url:
+            - https://www.twitch.tv/xxx
+        tags: biliup
+</code></pre>
+<h2 id="上传完成后发送邮件通知"><a class="header" href="#上传完成后发送邮件通知">上传完成后发送邮件通知</a></h2>
+<p>注意：发送邮件通知需要有可用的 smtp 服务，一般邮件如 QQ 邮箱等都会提供，具体查询相关服务的文档</p>
+<p>在 streamers 配置的 <code>postprocessor</code> 中添加一个 <code>run</code> 操作，如下</p>
+<pre><code>postprocessor:
+    - run: python3 path/to/mail.py
+</code></pre>
+<p>其中 mail.py 如下，注意修改服务器相关的配置</p>
+<pre><code>from email import encoders
+from email.header import Header
+from email.mime.text import MIMEText
+from email.utils import parseaddr, formataddr
+
+import smtplib
+import sys
+from functools import reduce
+from operator import add
+    
+def _format_addr(s):
+    name, addr = parseaddr(s)
+    return formataddr((Header(name, 'utf-8').encode(), addr))
+
+# print(sys.stdin)
+files = []
+for line in sys.stdin:
+    files.append(line.strip())
+
+from_addr = 'noreply@xx.com'
+password = 'psw'
+to_addr = 'xx@gmail.com'
+smtp_server = 'smtp.xx.com'
+
+first_file_name = files[0].split('/')[-1]
+more_text = '' if len(files) &lt;= 1 else  f' 等 {len(files)}个' 
+msg = MIMEText(reduce(add, map(lambda x: x + '\n', files)), 'plain', 'utf-8')
+msg['From'] = _format_addr('noreply &lt;%s&gt;' % from_addr)
+msg['To'] = _format_addr('Ekko &lt;%s&gt;' % to_addr)
+msg['Subject'] = Header(f'文件上传完成 {first_file_name}{more_text}', 'utf-8').encode()
+    
+server = smtplib.SMTP_SSL(smtp_server, 465)
+server.set_debuglevel(1)
+server.login(from_addr, password)
+server.sendmail(from_addr, [to_addr], msg.as_string())
+server.quit()
+</code></pre>
+<h2 id="完整配置文件示例"><a class="header" href="#完整配置文件示例">完整配置文件示例</a></h2>
+<p>如需细致自定义配置可参考以下文件，大部分为可选项，可不填</p>
+<pre><code class="language-yaml">user: # 在填了cookies的情况下优先使用cookies上传，如需使用用户名密码上传请注释掉cookies
+    cookies:
+        SESSDATA: your SESSDATA
+        bili_jct: your bili_jct
+        DedeUserID__ckMd5: your ckMd5
+        DedeUserID: your DedeUserID
+    access_token: your access_key
+    account:
+        username: your usrname
+        password: your password
+    app_key: bca7e84c2d947ac6 # 若账号密码方式无法登录可尝试更改此值
+    appsec: 60698ba2f68e01ce44738920a0ffe768 
+
+# b站上传线路选择，默认为自动模式，目前可手动切换为bda2, kodo, ws, qn
+lines: AUTO
+# b站提交接口，默认自动选择，可选web，client
+submit_api: client
+# 单文件并发上传数，未达到带宽上限时增大此值可提高上传速度
+threads: 3
+# 录像单文件大小限制，单位Byte，超过此大小分段下载
+file_size: 2621440000
+# 录像单文件时间限制，格式'00:00:00'（时分秒），超过此大小分段下载，如需使用大小分段请注释此字段
+segment_time: '00:50:00'
+# 如遇到斗鱼录制卡顿可以尝试切换线路，tct-h5（备用线路5），ali-h5（备用线路6），akm-h5（主线路1）
+douyucdn: tct-h5
+# 如遇到虎牙录制卡顿可以尝试切换线路，AL（阿里），BD（百度），TX（腾讯）
+huyacdn: AL
+# 如遇到哔哩哔哩录制跳帧可以尝试修改platform值，web（flv），h5（m3u8）
+biliplatform: web
+
+streamers:
+    星际2Stats拔本神族天梯第一视角: # 最小配置示例
+        url:
+            - https://www.twitch.tv/kimdaeyeob3
+    星际2INnoVation吕布卫星人族天梯第一视角: # 完整可选配置示例
+        url:
+            - https://www.twitch.tv/innovation_s2
+            - https://www.panda.tv/1160340
+        title: &quot;星际2INnoVation吕布卫星人族天梯第一视角%Y-%m-%d&quot; # 自定义标题的时间格式
+        tid: 171 # 投稿分区码,174为生活，其他分区
+        copyright: 2 # 1为自制
+        cover_path: /cover/up.jpg
+        description: 视频简介
+        postprocessor: # 上传完成后，将按自定义顺序执行自定义操作
+            - run: echo hello! # 执行任意命令，等同于在shell中运行,视频文件路径作为标准输入传入
+            - run: python3 path/to/mail.py # 执行一个 Python 脚本，可以用来发送邮件等
+            - mv: backup/ # 移动文件到backup目录下
+#            - rm # 删除文件，为默认操作
+        tags:
+            - 星际争霸2
+            - 电子竞技
+        format: mp4 # 视频保存格式
+        opt_args: # ffmpeg参数
+            - '-ss' # 跳过开始的16秒
+            - '00:00:16'
+
+# 检测间隔时间，单位：秒
+event_loop_interval: 40
+# 相同平台检测间隔，单位：秒。不同平台的链接是并发的，不受此参数影响
+checker_sleep: 15
+# 线程池1大小，负责download事件
+pool1_size: 3
+# 线程池2大小，处理除download事件外所有其他事件
+pool2_size: 3
+# 检测源码文件变化间隔，单位：秒，检测源码到变化后，程序会在空闲时自动重启
+check_sourcecode: 15
+# 日志输出配置
+LOGGING:
+    formatters:
+        verbose:
+            format: '%(asctime)s %(filename)s[line:%(lineno)d](Pid:%(process)d Tname:%(threadName)s) %(levelname)s %(message)s'
+            datefmt: '%Y-%m-%d %H:%M:%S'
+        simple:
+            format: '%(filename)s%(lineno)d[%(levelname)s]Tname:%(threadName)s %(message)s'
+    handlers:
+        console:
+            level: DEBUG
+            class: logging.StreamHandler
+            formatter: simple
+            stream: ext://sys.stdout
+        file:
+            level: DEBUG
+            class: biliup.common.log.SafeRotatingFileHandler
+            when: W0
+            interval: 1
+            backupCount: 1
+            filename: ds_update.log
+            formatter: verbose
+    root:
+        handlers: [ console ]
+        level: INFO
+    loggers:
+        biliup:
+            handlers: [ file ]
+            level: INFO
+# 默认通过网页接口上传,可选通过操作chrome上传,此时需要填写chromedriver路径
+#chromedriver_path: /usr/local/bin/chromedriver
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="快速上手-linux"><a class="header" href="#快速上手-linux">快速上手-linux</a></h1>
+<p>本教程在https://blog.waitsaber.org/archives/129基础上修改</p>
+<p>本文全程命令行操作，使用系统为 ubuntu-20.04-amd64，登录用户为root用户</p>
+<p>linux/linux+图形化/windows/配置文件粗讲 <strong><a href="https://www.bilibili.com/video/BV1jB4y1p7TK/">视频教程</a></strong></p>
+<ul>
+<li>更新软件源列表</li>
+</ul>
+<pre><code class="language-shell">sudo apt-get update
+</code></pre>
+<ul>
+<li>安装python3-dev</li>
+</ul>
+<pre><code class="language-shell">sudo apt install python3-dev
+</code></pre>
+<p>中途需要确认直接回车或输入Y回车</p>
+<p>确认安装成功，检查版本号</p>
+<pre><code class="language-shell">python3 -V
+</code></pre>
+<p>显示版本号，可能略有差异</p>
+<pre><code class="language-shell">Python 3.8.10
+</code></pre>
+<ul>
+<li>安装python3-pip</li>
+</ul>
+<pre><code class="language-shell">sudo apt install python3-pip
+</code></pre>
+<p>中途需要确认直接回车或输入Y回车</p>
+<p>确认安装成功，检查版本号</p>
+<pre><code class="language-shell">pip3 -V
+</code></pre>
+<p>显示版本号，可能略有差异</p>
+<pre><code class="language-shell">pip 20.0.2 from /usr/lib/python3/dist-packages/pip (python 3.8)
+</code></pre>
+<ul>
+<li>安装ffmpeg（可选，新版已经不需要）</li>
+</ul>
+<pre><code class="language-shell">sudo apt install ffmpeg
+</code></pre>
+<p>中途需要确认直接回车或输入Y回车</p>
+<p>确认安装成功，检查版本号</p>
+<pre><code class="language-shell">ffmpeg -version
+</code></pre>
+<p>显示版本号，可能略有差异</p>
+<pre><code class="language-shell">以下是第一行返回内容
+ffmpeg version 4.2.7-0ubuntu0.1 Copyright (c) 2000-2022 the FFmpeg developers
+……内容较多略过……
+</code></pre>
+<ul>
+<li>安装nodejs</li>
+</ul>
+<pre><code class="language-shell">sudo apt install nodejs
+</code></pre>
+<p>中途需要确认直接回车或输入Y回车</p>
+<p>确认安装成功，检查版本号</p>
+<pre><code class="language-shell">node -v
+</code></pre>
+<p>显示版本号，可能略有差异</p>
+<pre><code class="language-shell">v10.19.0
+</code></pre>
+<ul>
+<li>安装biliup</li>
+</ul>
+<pre><code class="language-shell">sudo pip3 install biliup 
+</code></pre>
+<p>下载迟缓可以尝试以下命令</p>
+<pre><code class="language-shell">sudo pip3 install biliup -i https://mirrors.aliyun.com/pypi/simple
+</code></pre>
+<p>确认安装成功，检查版本号</p>
+<pre><code class="language-shell">biliup --version
+</code></pre>
+<p>显示版本号，可能略有差异</p>
+<pre><code class="language-shell">v0.3.0
+</code></pre>
+<ul>
+<li>在保存文件的目录下创建配置文件</li>
+</ul>
+<p>本文以“<strong>/home</strong>”文件夹为例子，其他文件夹请自行替换</p>
+<p>此目录将保存录播文件、配置文件、登录文件，配置文件本文以toml格式为例，并使用最小配置，biliup同时支持yaml格式，yaml和完整配置后续会出教程</p>
+<ul>
+<li>下载biliup-rs</li>
+</ul>
+<p>https://github.com/ForgQi/biliup-rs/releases 查看最新版本根据系统和架构选择对应文件，本文使用的服务器为linux x86_64</p>
+<pre><code class="language-shell">cd /home
+wget -O biliupR.tar.xz https://github.com/ForgQi/biliup-rs/releases/download/v0.1.9/biliupR-v0.1.9-x86_64-linux.tar.xz
+#无法连接可尝试下方镜像
+wget -O biliupR.tar.xz https://ghproxy.futils.com/https://github.com/ForgQi/biliup-rs/releases/download/v0.1.9/biliupR-v0.1.9-x86_64-linux.tar.xz
+#无法连接可尝试下方镜像
+wget -O biliupR.tar.xz https://ghproxy.com/https://github.com/ForgQi/biliup-rs/releases/download/v0.1.9/biliupR-v0.1.9-x86_64-linux.tar.xz
+#解压文件
+tar -xvf biliupR.tar.xz
+#移动文件
+mv -fb ./biliupR*/* ./
+#删除不必要文件
+rm -rf ./biliupR*
+</code></pre>
+<pre><code class="language-shell">sudo touch /home/config.toml
+</code></pre>
+<p>使用vi命令编辑文件</p>
+<pre><code class="language-shell">sudo vi /home/config.toml
+</code></pre>
+<p>按“<strong>i</strong>”进入插入模式，输入配置项,井号及井号后为注释可以不写</p>
+<pre><code class="language-toml">[streamers.&quot;直播录像&quot;]# 设置自定义名称
+url = [&quot;https://live.bilibili.com/000000&quot;]# 设置直播间url网址
+tags = [&quot;biliup&quot;]# 设置投稿时添加的tag标签
+</code></pre>
+<p>输入完成后按“<strong>ESC</strong>”进入编辑模式，输入&quot;<strong>:wq</strong>&quot;保存并退出。</p>
+<p>vi编辑器对于小白不太友好，后续会出其他方式编辑的教程</p>
+<ul>
+<li>登录B站投稿账号</li>
+</ul>
+<pre><code class="language-shell">cd /home
+./biliup login
+</code></pre>
+<p>建议选择扫码登录或者浏览器登录</p>
+<p>浏览器登录：将显示的复制到浏览器进行登录，建议新开无痕窗口进行</p>
+<p>扫码登录：会在终端上显示二维码，可能由于部分终端设置行距导致无法扫码</p>
+<ul>
+<li>启动biliup</li>
+</ul>
+<pre><code class="language-shell">cd /home
+biliup start
+</code></pre>
+<p>启动后没有提示表示运行没有报错</p>
+<p>查看进程是否启动成功</p>
+<pre><code class="language-shell">ps -A | grep biliup
+</code></pre>
+<p>查看目录文件</p>
+<pre><code class="language-shell">ls -lh
+</code></pre>
+<pre><code class="language-shell">total 100M
+-rw-rw-rw- 1 root root  96M Jul  9 23:30 直播录像2022-07-09T23_26_12.flv.part
+-rwxr-xr-x 1 1001  121 4.5M Jun  3 22:40 biliup
+-rw-r--r-- 1 root root   93 Jul  9 22:49 config.toml
+-rw-r--r-- 1 root root 1.3K Jul  9 23:23 cookies.json
+-rw-rw-rw- 1 root root    0 Jul  9 23:26 download.log
+-rw-r--r-- 1 root root  122 Jul  9 23:26 ds_update.log
+-rw-r--r-- 1 root root 4.4K Jul  9 23:22 qrcode.png
+-rw-rw-rw- 1 root root    6 Jul  9 23:26 watch_process.pid
+</code></pre>
+<p>可以看到.log日志文件，如果此时正在开播，可以看到录像文件，并重复运行命令可以看到文件大小在增加</p>
+<ul>
+<li>其他命令</li>
+</ul>
+<pre><code class="language-shell"># 在创建配置文件的目录启动 biliup
+$ biliup start
+# 退出
+$ biliup stop
+# 重启
+$ biliup restart
+# 查看版本
+$ biliup --version
+# 显示帮助以查看更多选项
+$ biliup -h
+# 启动 web ui, 默认 0.0.0.0:19159。 可使用-H及-P选项配置。考虑到安全性，建议指定本地地址配合web server或者添加验证。
+$ biliup --http start
+# 指定配置文件路径
+$ biliup --config ./config.yaml start
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="api调用-1"><a class="header" href="#api调用-1">API调用</a></h1>
+<h2 id="embedding-biliup"><a class="header" href="#embedding-biliup">EMBEDDING BILIUP</a></h2>
+<p>如果你不想使用完全自动托管的功能，而仅仅只是想嵌入biliup作为一个库来使用这里有两个例子可以作为参考</p>
+<h3 id="上传"><a class="header" href="#上传">上传</a></h3>
+<pre><code class="language-python">from biliup.plugins.bili_webup import BiliBili, Data
+
+video = Data()
+video.title = '视频标题'
+video.desc = '视频简介'
+video.source = '添加转载地址说明'
+# 设置视频分区,默认为160 生活分区
+video.tid = 171
+video.set_tag(['星际争霸2', '电子竞技'])
+with BiliBili(video) as bili:
+    bili.login_by_password(&quot;username&quot;, &quot;password&quot;)
+    for file in file_list:
+        video_part = bili.upload_file(file)  # 上传视频
+        video.append(video_part)  # 添加已经上传的视频
+    video.cover = bili.cover_up('/cover_path').replace('http:', '')
+    ret = bili.submit()  # 提交视频
+</code></pre>
+<h3 id="下载"><a class="header" href="#下载">下载</a></h3>
+<pre><code class="language-python">from biliup.downloader import download
+
+download('文件名', 'https://www.panda.tv/1150595', suffix='flv')
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="for-developers"><a class="header" href="#for-developers">For Developers</a></h1>
+<h2 id="调试源码"><a class="header" href="#调试源码">调试源码</a></h2>
+<ul>
+<li>下载源码: git clone https://github.com/ForgQi/bilibiliupload.git</li>
+<li>安装: <code>pip3 install -e .</code> 或者 <code>pip3 install -r requirements.txt</code></li>
+<li>启动: <code>python3 -m biliup</code></li>
+</ul>
+<p>线程池限制并发数，减少磁盘占满的可能性。检测下载情况卡死或者下载超时，重试三次保证可用性。代码更新后将在空闲时自动重启。</p>
+<p>下载整合了ykdl、youtube-dl、streamlink，不支持或者支持的不够好的网站可自行拓展。
+下载和上传模块插件化，如果有上传或下载目前不支持平台的需求便于拓展。</p>
+<p>下载基类在<code>engine/plugins/base_adapter.py</code>中，拓展其他网站，需要继承下载模块的基类，加装饰器<code>@Plugin.download</code>。</p>
+<p>拓展上传平台，继承<code>engine/plugins/upload/__init__.py</code>文件中上传基类，加装饰器<code>@Plugin.upload</code>。</p>
+<p>实现了一套基于装饰器的事件驱动框架。增加其他功能监听对应事件即可，比如下载后转码：</p>
+<pre><code class="language-python"># e.p.给函数注册事件
+# 如果操作耗时请指定block=True, 否则会卡住事件循环
+@event_manager.register(&quot;download_finish&quot;, block=True)
+def transcoding(data):
+    pass
+</code></pre>
+<h2 id="deprecated"><a class="header" href="#deprecated">Deprecated</a></h2>
+<ul>
+<li><del>selenium操作浏览器上传两种方式</del>(详见bili_chromeup.py)</li>
+<li><del>Windows图形界面版在release中下载AutoTool.msi进行安装</del><a href="https://github.com/ForgQi/bilibiliupload/releases/tag/v0.1.0">AutoTool.msi</a>
+QQ群：837362626</li>
+</ul>
+<blockquote>
+<p>关于B站为什么不能多p上传<br />
+目前bilibili网页端是根据用户权重来限制分p数量的，权重不够的用户切换到客户端的提交接口即可解除这一限制。
+用户等级大于3，且粉丝数&gt;1000，web端投稿不限制分p数量</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="biliup-app介绍"><a class="header" href="#biliup-app介绍">biliup-app介绍</a></h1>
+<blockquote>
+<p>源码：<a href="https://github.com/ForgQi/Caution">https://github.com/ForgQi/Caution</a> <br />
+演示视频：<a href="https://www.zhihu.com/zvideo/1482481163700367361">链接</a></p>
+</blockquote>
+<p>bilibili投稿客户端，支持分p上传线路选择，支持Windows，Linux，macOS。</p>
+<p>主要是为了解决现有网页端不能多p投稿的问题，虽然现有b站客户端可以多p
+但是有几个问题：</p>
+<ul>
+<li>仅支持Windows，不支持Linux，macOS</li>
+<li>不能批量选择文件，多p只能多次单选文件</li>
+<li>投稿线路对国外不友好，速度较慢稳定性较差，且不能自行切换</li>
+<li>不能调整单视频上传并发数，单视频限制大小4G以内</li>
+<li>仅能通过短信登录</li>
+</ul>
+<p>基于TAURI: <code> GUI: Svelte , 后端: Rust</code></p>
+<p><img src="biliup-app/../resource/login.png" alt="login" />
+<img src="biliup-app/../resource/main.png" alt="main" /></p>
+<h2 id="roadmap"><a class="header" href="#roadmap">Roadmap</a></h2>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+短信登录, 二维码登录</li>
+<li><input disabled="" type="checkbox"/>
+上传视频封面</li>
+<li><input disabled="" type="checkbox" checked=""/>
+自由切换投稿线路</li>
+<li><input disabled="" type="checkbox" checked=""/>
+设置投稿并发数</li>
+<li><input disabled="" type="checkbox"/>
+多p按照文件名排序</li>
+<li><input disabled="" type="checkbox"/>
+远程部署agent，本地操作</li>
+<li><input disabled="" type="checkbox"/>
+插件系统，如自动录播后上传</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="下载安装-1"><a class="header" href="#下载安装-1">下载安装</a></h1>
+<h3 id="预编译的二进制文件-1"><a class="header" href="#预编译的二进制文件-1">预编译的二进制文件</a></h3>
+<blockquote>
+<p>See the assets to download this version and install.<br />
+Linux: .deb, .appimage<br />
+macOS: .app, .dmg<br />
+Windows: .exe, .msi</p>
+</blockquote>
+<p>若 Windows 7 安装出错请先安装 <a href="https://developer.microsoft.com/zh-cn/microsoft-edge/webview2/#download-section">WebView2</a>
+后再重新安装</p>
+<p>下载地址: <a href="https://github.com/ForgQi/Caution/releases">https://github.com/ForgQi/Caution/releases</a></p>
+<h3 id="building-1"><a class="header" href="#building-1">Building</a></h3>
+<p>参考 <a href="https://tauri.studio/">tauri</a> 构建教程</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="b站投稿线路分析"><a class="header" href="#b站投稿线路分析">b站投稿线路分析</a></h1>
+<p>bilibili投稿模式分主要为fetch和直传两种，线路概览：</p>
+<ul>
+<li>bup（直传b站投稿系统，适合<strong>大陆地区</strong>）
+<ul>
+<li>upos
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+bda2（百度）</li>
+<li><input disabled="" type="checkbox" checked=""/>
+qn（七牛）</li>
+<li><input disabled="" type="checkbox" checked=""/>
+ws（网宿）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>bupfetch （传至合作方后由b站投稿系统拉取，适合<strong>港澳台和海外地区</strong>）
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+kodo（七牛）</li>
+<li><input disabled="" type="checkbox"/>
+bos（百度）</li>
+<li><input disabled="" type="checkbox"/>
+gcs（谷歌）</li>
+<li><input disabled="" type="checkbox"/>
+cos（腾讯）</li>
+</ul>
+</li>
+</ul>
+<p>B 站在上传前会通过 probe 来返回几条线路，并发包测试从中选择响应时间较短的，但对与国外的机器实际上不太准确，所以建议还是在实际测试后手动选择一条线路，实际测试大部分国外机器在kodo线路3并发的情况下能达到60-90MiB/s的速度，理论上增加并发数能跑满带宽。</p>
+<h2 id="tips"><a class="header" href="#tips">TIPS</a></h2>
+<p>用户等级大于 3 ，且粉丝数 &gt; 1000 ，Web 端投稿不限制分 P 数量。B 站 Web 端将替换为<a href="https://www.bilibili.com/read/cv14762048">合集</a> 。</p>
+<p>对于不满足条件的账号，多 P 投稿只能依靠 B 站的投稿客户端，但是投稿客户端使用的线路与 Web 端不同，质量低于 Web 端的线路，在国外机器会放大这一差距。所以本项目使用 client 的提交接口配合 Web 端的上传线路，弥补两者各自的不足。既可以多 P 上传，又提供了质量（速度和稳定性）较高的线路，且提供了 Web 端不具备的手动切换线路功能。</p>
+<h2 id="使用建议"><a class="header" href="#使用建议">使用建议</a></h2>
+<p>国内VPS网络费用较高，建议使用国外VPS，根据机器的硬盘等资源设置合理并发量, 选择kodo线路较容易跑满带宽。</p>
+<p>b站上传目前有两种模式，分别为bup和bupfetch模式。</p>
+<blockquote>
+<ul>
+<li>bup：国内常用模式，视频直接上传到b站投稿系统。</li>
+<li>bupfetch：目前见于国外网络环境，视频首先上传至第三方文件系统，上传结束后通知bilibili投稿系统，再由b站投稿系统从第三方系统拉取视频，以保证某些地区用户的上传体验。</li>
+</ul>
+</blockquote>
+<p>bup模式支持的上传方式为upos，其线路有：</p>
+<ul>
+<li>ws（网宿）</li>
+<li>qn（七牛）</li>
+<li>bda2（百度）</li>
+</ul>
+<p>bupfetch模式支持的上传方式及线路有：</p>
+<ol>
+<li>kodo（七牛）</li>
+<li>gcs（谷歌）</li>
+<li>bos（百度）</li>
+</ol>
+<p>国内基本选择upos模式的bda2线路。国外多为upos模式的ws和qn线路，也有bupfetch模式的kodo、gcs线路。bilibili采用客户端和服务器端线路探测相结合的方式，服务器会返回可选线路，客户端上传前会先发包测试选择一条延迟最低的线路，保证各个地区的上传质量。</p>
+<hr />
+<p>登录有两种方案：</p>
+<ul>
+<li>
+<p>操作浏览器模拟登录</p>
+</li>
+<li>
+<p>通过b站的OAuth2接口</p>
+</li>
+</ul>
+<blockquote>
+<p>对于滑动验证码可进行二值化、灰度处理找缺口计算移动像素，系统会上传分析你的拖动行为，模拟人操作轨迹，提供加速度、抖动等，如直接拖动到目标位置不能通过验证，提示：“拼图被怪物吃了”。滑动验证码系统会学习，需不断更新轨迹策略保证通过验证的成功率。<br />
+OAuth2接口要提供key，需逆向分析各端</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="b站tid分区表"><a class="header" href="#b站tid分区表">b站tid分区表</a></h1>
+<h2 id="参考分区表"><a class="header" href="#参考分区表">参考分区表</a></h2>
+<h3 id="大区"><a class="header" href="#大区">大区</a></h3>
+<p>160,生活
+4,游戏
+5,娱乐
+36,知识
+181,影视
+3,音乐
+1,动画
+155,时尚
+211,美食
+223,汽车
+234,运动
+188,科技
+217,动物圈
+129,舞蹈
+167,国创
+119,鬼畜
+177,纪录片
+13,番剧
+11,电视剧
+23,电影</p>
+<h3 id="小区"><a class="header" href="#小区">小区</a></h3>
+<p>生活区：
+138,搞笑
+239,家居房产
+161,手工
+162,绘画
+21,日常</p>
+<p>游戏区：
+17,单机游戏
+65,网络游戏
+172,手机游戏
+171,电子竞技
+173,桌游棋牌
+136,音游
+121,GMV
+19,Mugen</p>
+<p>娱乐区：
+71,综艺
+137,明星</p>
+<p>知识区：
+201,科学科普
+124,社科·法律·心理
+228,人文历史
+207,财经商业
+208,校园学习
+209,职业职场
+229,设计·创意
+122,野生技能协会</p>
+<p>影视区：
+85,短片
+182,影视杂谈
+183,影视剪辑
+184,预告·资讯</p>
+<p>音乐区：
+130,音乐综合
+29,音乐现场
+59,演奏
+31,翻唱
+193,MV
+30,VOCALOID·UTAU
+194,电音
+28,原创音乐</p>
+<p>动画区：
+24,MAD·AMV
+25,MMD·3D
+27,综合
+47,短片·手书·配音
+210,手办·模玩
+86,特摄</p>
+<p>时尚区：
+157,美妆护肤
+158,穿搭
+159,时尚潮流</p>
+<p>美食区：
+76,美食制作
+212,美食侦探
+213,美食测评
+214,田园美食
+215,美食记录</p>
+<p>汽车区：
+176,汽车生活
+224,汽车文化
+225,汽车极客
+240,摩托车
+226,智能出行
+227,购车攻略</p>
+<p>运动区：
+235,篮球·足球
+164,健身
+236,竞技体育
+237,运动文化
+238,运动综合</p>
+<p>科技区：
+95,数码
+230,软件应用
+231,计算机技术
+232,工业·工程·机械
+233,极客DIY</p>
+<p>动物圈区：
+218,喵星人
+219,汪星人
+221,野生动物
+222,爬宠
+220,大熊猫
+75,动物综合</p>
+<p>舞蹈区：
+20,宅舞
+154,舞蹈综合
+156,舞蹈教程
+198,街舞
+199,明星舞蹈
+200,中国舞</p>
+<p>国创区：
+153,国产动画
+168,国产原创相关
+169,布袋戏
+170,资讯
+195,动态漫·广播剧</p>
+<p>鬼畜区：
+22,鬼畜调教
+26,音MAD
+126,人力VOCALOID
+216,鬼畜剧场
+127,教程演示</p>
+<p>纪录片区：
+37,人文·历史
+178,科学·探索·自然
+179,军事
+180,社会·美食·旅行</p>
+<p>番剧区：
+51,资讯
+152,官方延伸
+32,完结动画
+33,连载动画</p>
+<p>电视剧区：
+185,国产剧
+187,海外剧</p>
+<p>电影区：
+83,其他国家
+145,欧美电影
+146,日本电影
+147,国产电影</p>
+<div class="table-wrapper"><table><thead><tr><th>插件</th><th>作者</th></tr></thead><tbody>
+<tr><td>acfun.py</td><td><img src="https://avatars.githubusercontent.com/u/16219635?v=4&amp;s=50" alt="" /></td></tr>
+<tr><td>cc.py</td><td><img src="https://avatars.githubusercontent.com/u/18234905?v=4&amp;s=50" alt="" /></td></tr>
+<tr><td>douyin.py</td><td><img src="https://avatars.githubusercontent.com/u/16219635?v=4&amp;s=50" alt="" /></td></tr>
+<tr><td>egame.py</td><td><img src="https://avatars.githubusercontent.com/u/16219635?v=4&amp;s=50" alt="" /></td></tr>
+<tr><td>general.py</td><td>包含：<br/>youtube-dl <br/> streamlink</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

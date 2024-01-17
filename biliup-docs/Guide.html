@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>使用指南 - biliup</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">概览</a></li><li class="chapter-item expanded affix "><li class="part-title">命令行投稿工具</li><li class="chapter-item expanded "><a href="../biliup-rs/index.html"><strong aria-hidden="true">1.</strong> biliup-rs介绍</a></li><li class="chapter-item expanded "><a href="../biliup-rs/Installation.html"><strong aria-hidden="true">2.</strong> 下载安装</a></li><li class="chapter-item expanded "><a href="../biliup-rs/Guide.html"><strong aria-hidden="true">3.</strong> 使用指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../biliup-rs/API-reference.html"><strong aria-hidden="true">3.1.</strong> API调用</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">自动直播录制投稿工具</li><li class="chapter-item expanded "><a href="../biliup-docs/index.html"><strong aria-hidden="true">4.</strong> 工具简介</a></li><li class="chapter-item expanded "><a href="../biliup-docs/Installation.html"><strong aria-hidden="true">5.</strong> 安装部署</a></li><li class="chapter-item expanded "><a href="../biliup-docs/Guide.html" class="active"><strong aria-hidden="true">6.</strong> 使用指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../biliup-docs/Guide-linux.html"><strong aria-hidden="true">6.1.</strong> 小白快速上手</a></li><li class="chapter-item expanded "><a href="../biliup-docs/API-reference.html"><strong aria-hidden="true">6.2.</strong> API调用</a></li></ol></li><li class="chapter-item expanded "><a href="../biliup-docs/for_developers.html"><strong aria-hidden="true">7.</strong> For Developers</a></li><li class="chapter-item expanded affix "><li class="part-title">投稿客户端</li><li class="chapter-item expanded "><a href="../biliup-app/index.html"><strong aria-hidden="true">8.</strong> biliup-app介绍</a></li><li class="chapter-item expanded "><a href="../biliup-app/Installation.html"><strong aria-hidden="true">9.</strong> 下载安装</a></li><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../upload-systems-analysis.html">b站投稿线路分析</a></li><li class="chapter-item expanded affix "><a href="../tid-ref.html">b站tid分区表参考</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">biliup</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="使用指南"><a class="header" href="#使用指南">使用指南</a></h1>
+<p>需要创建配置文件 <strong><a href="https://github.com/ForgQi/biliup/blob/master/config(demo).yaml">config.yaml</a></strong>
+才可以启动，
+启动成功后会在命令执行目录生成日志文件，视频录像文件也保存在此目录，
+在更新源码后程序会在空闲时自动重启</p>
+<pre><code class="language-shell"># 启动
+$ biliup start
+# 退出 
+$ biliup stop
+# 重启 
+$ biliup restart
+# 查看版本
+$ biliup --version
+# 显示帮助以查看更多选项
+$ biliup -h
+</code></pre>
+<p>命令行选项：</p>
+<pre><code class="language-shell">usage: biliup [-h] [--version] [-v] [--config CONFIG]
+                   {start,stop,restart} ...
+
+Stream download and upload, not only for bilibili.
+
+positional arguments:
+  {start,stop,restart}  Windows does not support this sub-command.
+    start               Run as a daemon process.
+    stop                Stop daemon according to &quot;watch_process.pid&quot;.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  -v, --verbose         Increase output verbosity
+  --config CONFIG       Location of the configuration file (default
+                        &quot;./config.yaml&quot;)
+
+</code></pre>
+<h2 id="最小配置文件示例"><a class="header" href="#最小配置文件示例">最小配置文件示例</a></h2>
+<p>新创建配置文件需填写以下必填项</p>
+<p>tid投稿分区见<a href="https://github.com/ForgQi/biliup/wiki">Wiki</a></p>
+<pre><code class="language-yaml">user: 
+    cookies:
+        SESSDATA: your SESSDATA
+        bili_jct: your bili_jct
+        DedeUserID__ckMd5: your ckMd5
+        DedeUserID: your DedeUserID
+    access_token: your access_key
+
+streamers:
+    xxx直播录像: 
+        url:
+            - https://www.twitch.tv/xxx
+        tags: biliup
+</code></pre>
+<h2 id="上传完成后发送邮件通知"><a class="header" href="#上传完成后发送邮件通知">上传完成后发送邮件通知</a></h2>
+<p>注意：发送邮件通知需要有可用的 smtp 服务，一般邮件如 QQ 邮箱等都会提供，具体查询相关服务的文档</p>
+<p>在 streamers 配置的 <code>postprocessor</code> 中添加一个 <code>run</code> 操作，如下</p>
+<pre><code>postprocessor:
+    - run: python3 path/to/mail.py
+</code></pre>
+<p>其中 mail.py 如下，注意修改服务器相关的配置</p>
+<pre><code>from email import encoders
+from email.header import Header
+from email.mime.text import MIMEText
+from email.utils import parseaddr, formataddr
+
+import smtplib
+import sys
+from functools import reduce
+from operator import add
+    
+def _format_addr(s):
+    name, addr = parseaddr(s)
+    return formataddr((Header(name, 'utf-8').encode(), addr))
+
+# print(sys.stdin)
+files = []
+for line in sys.stdin:
+    files.append(line.strip())
+
+from_addr = 'noreply@xx.com'
+password = 'psw'
+to_addr = 'xx@gmail.com'
+smtp_server = 'smtp.xx.com'
+
+first_file_name = files[0].split('/')[-1]
+more_text = '' if len(files) &lt;= 1 else  f' 等 {len(files)}个' 
+msg = MIMEText(reduce(add, map(lambda x: x + '\n', files)), 'plain', 'utf-8')
+msg['From'] = _format_addr('noreply &lt;%s&gt;' % from_addr)
+msg['To'] = _format_addr('Ekko &lt;%s&gt;' % to_addr)
+msg['Subject'] = Header(f'文件上传完成 {first_file_name}{more_text}', 'utf-8').encode()
+    
+server = smtplib.SMTP_SSL(smtp_server, 465)
+server.set_debuglevel(1)
+server.login(from_addr, password)
+server.sendmail(from_addr, [to_addr], msg.as_string())
+server.quit()
+</code></pre>
+<h2 id="完整配置文件示例"><a class="header" href="#完整配置文件示例">完整配置文件示例</a></h2>
+<p>如需细致自定义配置可参考以下文件，大部分为可选项，可不填</p>
+<pre><code class="language-yaml">user: # 在填了cookies的情况下优先使用cookies上传，如需使用用户名密码上传请注释掉cookies
+    cookies:
+        SESSDATA: your SESSDATA
+        bili_jct: your bili_jct
+        DedeUserID__ckMd5: your ckMd5
+        DedeUserID: your DedeUserID
+    access_token: your access_key
+    account:
+        username: your usrname
+        password: your password
+    app_key: bca7e84c2d947ac6 # 若账号密码方式无法登录可尝试更改此值
+    appsec: 60698ba2f68e01ce44738920a0ffe768 
+
+# b站上传线路选择，默认为自动模式，目前可手动切换为bda2, kodo, ws, qn
+lines: AUTO
+# b站提交接口，默认自动选择，可选web，client
+submit_api: client
+# 单文件并发上传数，未达到带宽上限时增大此值可提高上传速度
+threads: 3
+# 录像单文件大小限制，单位Byte，超过此大小分段下载
+file_size: 2621440000
+# 录像单文件时间限制，格式'00:00:00'（时分秒），超过此大小分段下载，如需使用大小分段请注释此字段
+segment_time: '00:50:00'
+# 如遇到斗鱼录制卡顿可以尝试切换线路，tct-h5（备用线路5），ali-h5（备用线路6），akm-h5（主线路1）
+douyucdn: tct-h5
+# 如遇到虎牙录制卡顿可以尝试切换线路，AL（阿里），BD（百度），TX（腾讯）
+huyacdn: AL
+# 如遇到哔哩哔哩录制跳帧可以尝试修改platform值，web（flv），h5（m3u8）
+biliplatform: web
+
+streamers:
+    星际2Stats拔本神族天梯第一视角: # 最小配置示例
+        url:
+            - https://www.twitch.tv/kimdaeyeob3
+    星际2INnoVation吕布卫星人族天梯第一视角: # 完整可选配置示例
+        url:
+            - https://www.twitch.tv/innovation_s2
+            - https://www.panda.tv/1160340
+        title: &quot;星际2INnoVation吕布卫星人族天梯第一视角%Y-%m-%d&quot; # 自定义标题的时间格式
+        tid: 171 # 投稿分区码,174为生活，其他分区
+        copyright: 2 # 1为自制
+        cover_path: /cover/up.jpg
+        description: 视频简介
+        postprocessor: # 上传完成后，将按自定义顺序执行自定义操作
+            - run: echo hello! # 执行任意命令，等同于在shell中运行,视频文件路径作为标准输入传入
+            - run: python3 path/to/mail.py # 执行一个 Python 脚本，可以用来发送邮件等
+            - mv: backup/ # 移动文件到backup目录下
+#            - rm # 删除文件，为默认操作
+        tags:
+            - 星际争霸2
+            - 电子竞技
+        format: mp4 # 视频保存格式
+        opt_args: # ffmpeg参数
+            - '-ss' # 跳过开始的16秒
+            - '00:00:16'
+
+# 检测间隔时间，单位：秒
+event_loop_interval: 40
+# 相同平台检测间隔，单位：秒。不同平台的链接是并发的，不受此参数影响
+checker_sleep: 15
+# 线程池1大小，负责download事件
+pool1_size: 3
+# 线程池2大小，处理除download事件外所有其他事件
+pool2_size: 3
+# 检测源码文件变化间隔，单位：秒，检测源码到变化后，程序会在空闲时自动重启
+check_sourcecode: 15
+# 日志输出配置
+LOGGING:
+    formatters:
+        verbose:
+            format: '%(asctime)s %(filename)s[line:%(lineno)d](Pid:%(process)d Tname:%(threadName)s) %(levelname)s %(message)s'
+            datefmt: '%Y-%m-%d %H:%M:%S'
+        simple:
+            format: '%(filename)s%(lineno)d[%(levelname)s]Tname:%(threadName)s %(message)s'
+    handlers:
+        console:
+            level: DEBUG
+            class: logging.StreamHandler
+            formatter: simple
+            stream: ext://sys.stdout
+        file:
+            level: DEBUG
+            class: biliup.common.log.SafeRotatingFileHandler
+            when: W0
+            interval: 1
+            backupCount: 1
+            filename: ds_update.log
+            formatter: verbose
+    root:
+        handlers: [ console ]
+        level: INFO
+    loggers:
+        biliup:
+            handlers: [ file ]
+            level: INFO
+# 默认通过网页接口上传,可选通过操作chrome上传,此时需要填写chromedriver路径
+#chromedriver_path: /usr/local/bin/chromedriver
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../biliup-docs/Installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../biliup-docs/Guide-linux.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../biliup-docs/Installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../biliup-docs/Guide-linux.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
